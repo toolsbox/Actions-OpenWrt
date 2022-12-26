@@ -20,7 +20,7 @@ on:
 
   schedule:
     # 对应的是 UTC 时间，需要转换，0 代表北京时间8点，每个月1日/15日16点编译一次
-    - cron: 5 16 25 * *
+    - cron: 45 6 26 * *
 
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
@@ -50,7 +50,7 @@ jobs:
       run: |
         sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
         sudo -E apt-get -qq update
-        sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-2004)
+        sudo -E apt-get -qq install $(curl -fsSL raw.githubusercontent.com/hochenchong/Actions-OpenWrt/main/depends-ubuntu-2004)
         sudo -E apt-get -qq autoremove --purge
         sudo -E apt-get -qq clean
         sudo timedatectl set-timezone "$TZ"
