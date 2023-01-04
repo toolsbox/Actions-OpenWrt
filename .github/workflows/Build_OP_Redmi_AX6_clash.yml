@@ -20,7 +20,7 @@ on:
 
   schedule:
     # 对应的是 UTC 时间，需要转换，0 代表北京时间8点，每个月1日/15日12点编译一次
-    - cron: 25 7 3 * *
+    - cron: 5 8 4 * *
 
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
@@ -65,15 +65,7 @@ jobs:
       # 添加红米ax6 编译选项
     - name: Redmi ax6 support
       run: |
-        cd openwrt
-        echo '' >> target/linux/ipq807x/image/generic.mk
-        echo 'define Device/redmi_ax6' >> target/linux/ipq807x/image/generic.mk
-        echo '	$(call Device/xiaomi_ax3600)' >> target/linux/ipq807x/image/generic.mk
-        echo '	DEVICE_VENDOR := Redmi' >> target/linux/ipq807x/image/generic.mk
-        echo '	DEVICE_MODEL := AX6' >> target/linux/ipq807x/image/generic.mk
-        echo '	DEVICE_PACKAGES := ipq-wifi-redmi_ax6 uboot-envtools' >> target/linux/ipq807x/image/generic.mk
-        echo 'endef' >> target/linux/ipq807x/image/generic.mk
-        echo 'TARGET_DEVICES += redmi_ax6' >> target/linux/ipq807x/image/generic.mk
+        cp -rf $GITHUB_WORKSPACE/generic.mk openwrt/target/linux/ipq807x/image/generic.mk
     # 配置 openClash
     - name: OpenClash
       run: |
@@ -108,7 +100,8 @@ jobs:
       id: compile
       run: |
         cd openwrt
-        make -j1 V=s
+        echo -e "$(nproc) thread compile"
+        make -j$(nproc) || make -j1 || make -j1 V=s
         echo "status=success" >> $GITHUB_OUTPUT
         grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
         [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
