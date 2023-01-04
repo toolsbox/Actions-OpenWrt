@@ -65,7 +65,7 @@ jobs:
       # 添加红米ax6 编译选项
     - name: Redmi ax6 support
       run: |
-        cp -rf $GITHUB_WORKSPACE/generic.mk openwrt/target/linux/ipq807x/image/generic.mk
+        cp -rf $GITHUB_WORKSPACE/ax6/generic.mk openwrt/target/linux/ipq807x/image/generic.mk
     # 配置 openClash
     - name: OpenClash
       run: |
@@ -127,6 +127,7 @@ jobs:
         rm -rf sha256sums
         rm -rf *.manifest
         rm -rf *kernel.bin
+        rm -rf *.itb
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "status=success" >> $GITHUB_OUTPUT
     - name: Upload firmware directory
@@ -141,6 +142,13 @@ jobs:
       run: |
         echo "release_tag=$(date +"%Y.%m.%d-Redmi-AX6-Include-OpenClash")" >> $GITHUB_OUTPUT
         touch release.txt
+        echo "红米 AX6 自用精简 Openwrt：" >> release.txt
+        echo "默认系统后台：192.168.123.1" >> release.txt
+        echo "账号：root" >> release.txt
+        echo "密码：password" >> release.txt
+        echo "编译的源码取自：https://github.com/coolsnowwolf/lede" >> release.txt
+        echo "集成插件：openClash、TTYD 终端、阿里云盘webdev" >> release.txt
+        echo "默认主题：Argon" >> release.txt
         echo "status=success" >> $GITHUB_OUTPUT
     - name: Upload firmware to release
       uses: softprops/action-gh-release@v1

@@ -20,7 +20,7 @@ on:
 
   schedule:
     # 对应的是 UTC 时间，需要转换，0 代表北京时间8点，每个月1日/15日16点编译一次
-    - cron: 0 8 1,15 * *
+    - cron: 55 12 4 * *
 
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
@@ -62,18 +62,10 @@ jobs:
         df -hT $PWD
         git clone $REPO_URL -b $REPO_BRANCH openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
-    # 添加红米ax6 编译选项
+      # 添加红米ax6 编译选项
     - name: Redmi ax6 support
       run: |
-        cd openwrt
-        echo '' >> target/linux/ipq807x/image/generic.mk
-        echo 'define Device/redmi_ax6' >> target/linux/ipq807x/image/generic.mk
-        echo '	$(call Device/xiaomi_ax3600)' >> target/linux/ipq807x/image/generic.mk
-        echo '	DEVICE_VENDOR := Redmi' >> target/linux/ipq807x/image/generic.mk
-        echo '	DEVICE_MODEL := AX6' >> target/linux/ipq807x/image/generic.mk
-        echo '	DEVICE_PACKAGES := ipq-wifi-redmi_ax6 uboot-envtools' >> target/linux/ipq807x/image/generic.mk
-        echo 'endef' >> target/linux/ipq807x/image/generic.mk
-        echo 'TARGET_DEVICES += redmi_ax6' >> target/linux/ipq807x/image/generic.mk
+        cp -rf $GITHUB_WORKSPACE/ax6/generic.mk openwrt/target/linux/ipq807x/image/generic.mk
     - name: Load custom feeds
       run: |
         [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
@@ -133,6 +125,7 @@ jobs:
         rm -rf *.buildinfo
         rm -rf sha256sums
         rm -rf *.manifest
+        rm -rf *kernel.bin
         rm -rf *.itb
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "status=success" >> $GITHUB_OUTPUT
@@ -149,6 +142,13 @@ jobs:
       run: |
         echo "release_tag=$(date +"%Y.%m.%d-Redmi-AX6")" >> $GITHUB_OUTPUT
         touch release.txt
+        echo "红米 AX6 自用精简 Openwrt：" >> release.txt
+        echo "默认系统后台：192.168.123.1" >> release.txt
+        echo "账号：root" >> release.txt
+        echo "密码：password" >> release.txt
+        echo "编译的源码取自：https://github.com/coolsnowwolf/lede" >> release.txt
+        echo "集成插件：ssr plus、TTYD 终端" >> release.txt
+        echo "默认主题：Argon" >> release.txt
         echo "status=success" >> $GITHUB_OUTPUT
     - name: Upload firmware to release
       uses: softprops/action-gh-release@v1
