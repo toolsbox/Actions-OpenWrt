@@ -128,6 +128,7 @@ jobs:
         rm -rf *.manifest
         rm -rf *kernel.bin
         rm -rf *.itb
+        rm -rf *.json
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "status=success" >> $GITHUB_OUTPUT
     - name: Upload firmware directory
