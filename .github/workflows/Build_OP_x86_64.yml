@@ -18,9 +18,9 @@ on:
     #branches:
       #- master
 
-  # schedule:
+  schedule:
     # 对应的是 UTC 时间，需要转换，0 代表北京时间8点，每个月1日/15日14点编译一次
-    # - cron: 0 6 1,15 * *
+    - cron: 15 13 17 * *
 
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
@@ -68,6 +68,7 @@ jobs:
           chmod +x $DIY_P1_SH
           cd openwrt
           $GITHUB_WORKSPACE/$DIY_P1_SH
+          sed -i 's/KERNEL_PATCHVER:=5.15/KERNEL_PATCHVER:=6.1/g' ./target/linux/x86/Makefile
       - name: Update feeds
         run: cd openwrt && ./scripts/feeds update -a
 
