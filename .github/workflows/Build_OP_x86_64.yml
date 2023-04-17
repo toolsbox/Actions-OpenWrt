@@ -20,7 +20,7 @@ on:
 
   schedule:
     # 对应的是 UTC 时间，需要转换，0 代表北京时间8点，每个月1日/15日14点编译一次
-    - cron: 15 13 17 * *
+    - cron: 30 16 17 * *
 
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
@@ -136,6 +136,13 @@ jobs:
         run: |
           echo "release_tag=$(date +"%Y.%m.%d-x86_64")" >> $GITHUB_OUTPUT
           touch release.txt
+          echo "X86-64 自用精简 Openwrt：" >> release.txt
+          echo "默认系统后台：192.168.123.1" >> release.txt
+          echo "账号：root" >> release.txt
+          echo "密码：password" >> release.txt
+          echo "编译的源码取自：https://github.com/coolsnowwolf/lede" >> release.txt
+          echo "集成插件：ssr plus、TTYD 终端" >> release.txt
+          echo "默认主题：Argon" >> release.txt
           echo "status=success" >> $GITHUB_OUTPUT
       - name: Upload firmware to release
         uses: softprops/action-gh-release@v1
