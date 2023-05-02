@@ -121,6 +121,9 @@ jobs:
           rm -rf sha256sums
           rm -rf *.manifest
           rm -rf *kernel.bin
+          rm -rf *.vmdk
+          rm -rf *rootfs.img.gz
+          rm -rf *.json
           echo "FIRMWARE=$PWD" >> $GITHUB_ENV
           echo "status=success" >> $GITHUB_OUTPUT
       - name: Upload firmware directory
