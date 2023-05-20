@@ -10,9 +10,17 @@
 
 name: Build Redmi AX6
 
-on: 
-  release:
-    types: [published]
+on:
+  repository_dispatch:
+  workflow_dispatch:
+    inputs:
+      clean:
+         description: 'clean ccache'
+         default: 'false'
+
+#on: 
+#  release:
+#    types: [published]
 
   #push:
     #branches:
