@@ -147,7 +147,7 @@ jobs:
           echo "release_tag=$(date +"%Y.%m.%d-x86_64")" >> $GITHUB_OUTPUT
           touch release.txt
           echo "X86-64 自用精简 Openwrt：" >> release.txt
-          echo "默认系统后台：192.168.123.1" >> release.txt
+          echo "默认系统后台：192.168.31.4" >> release.txt
           echo "账号：root" >> release.txt
           echo "密码：password" >> release.txt
           echo "编译的源码取自：https://github.com/coolsnowwolf/lede" >> release.txt
