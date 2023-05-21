@@ -9,9 +9,9 @@
 Build OpenWrt firware [Lean's OpenWrt](https://github.com/coolsnowwolf/lede) using GitHub Actions  
 Hereby thank P3TERX for his amazing job: https://github.com/P3TERX/Actions-OpenWrt/  
 
-Main compiled router firmware: Redmi AX6, Xiaomi CR660X
+Main compiled router firmware: Redmi AX6
 
-Default Web Admin IP: `192.168.123.1`, username `root`, username `password`, theme: argon
+Default Web Admin IP: `192.168.31.14`, username `root`, username `password`, theme: argon
 
 ## Usage
 
