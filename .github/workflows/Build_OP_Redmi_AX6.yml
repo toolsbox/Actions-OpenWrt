@@ -33,7 +33,7 @@ on:
 
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
-  REPO_BRANCH: 52223ba9d6
+  REPO_BRANCH: 52223ba9d6b41fed7380ca9b65312f57c9769c9f
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: redmi_ax6.config
   DIY_P1_SH: diy-part1.sh
