@@ -10,8 +10,12 @@
 # Description: OpenWrt DIY script part 2 (After Update feeds)
 #
 
-# Modify default IP
+# 修改默认 IP
 sed -i 's/192.168.1.1/192.168.31.14/g' package/base-files/files/bin/config_generate
+
+#修改自定义内容
+sed -i "s/DISTRIB_DESCRIPTION=.*/DISTRIB_DESCRIPTION='OpenWrt By toolsbox ($(date +%Y-%m-%d %H:%M)) '/g" package/base-files/files/etc/openwrt_release
+
 # Modify X86 Kernel 5.10
 # sed -i 's/KERNEL_PATCHVER:=5.10/KERNEL_PATCHVER:=5.15/g' target/linux/x86/Makefile
 # Clear the login password
